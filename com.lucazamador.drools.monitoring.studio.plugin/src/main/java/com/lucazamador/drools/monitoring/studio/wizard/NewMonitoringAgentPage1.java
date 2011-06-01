@@ -6,6 +6,7 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -49,6 +50,9 @@ public class NewMonitoringAgentPage1 extends WizardPage {
                 setPageComplete(isConfigurationComplete());
             }
         });
+        GridData gd = new GridData();
+        gd.widthHint = 100;
+        agentIdText.setLayoutData(gd);
 
         label = new Label(container, SWT.NONE);
         label.setText("Address:");
@@ -60,6 +64,7 @@ public class NewMonitoringAgentPage1 extends WizardPage {
                 setPageComplete(isConfigurationComplete());
             }
         });
+        addressText.setLayoutData(gd);
 
         label = new Label(container, SWT.NONE);
         label.setText("Port:");
@@ -83,6 +88,7 @@ public class NewMonitoringAgentPage1 extends WizardPage {
                 setPageComplete(isConfigurationComplete());
             }
         });
+        portText.setLayoutData(gd);
 
         label = new Label(container, SWT.NONE);
         label.setText("Scan Interval (ms):");

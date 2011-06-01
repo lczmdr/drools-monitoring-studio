@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+<project
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
   xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <parent>
@@ -16,6 +17,30 @@
     <dependency>
       <groupId>com.lucazamador</groupId>
       <artifactId>drools-monitoring-engine</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.lucazamador</groupId>
+      <artifactId>drools-monitoring-model</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>commons-collections</groupId>
+      <artifactId>commons-collections</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.thoughtworks.xstream</groupId>
+      <artifactId>xstream</artifactId>
     </dependency>
   </dependencies>
 
@@ -38,10 +63,35 @@
               <overWriteSnapshots>false</overWriteSnapshots>
               <overWriteIfNewer>true</overWriteIfNewer>
               <overWriteIfNewer>true</overWriteIfNewer>
+              <transitive>true</transitive>
               <artifactItems>
                 <artifactItem>
                   <groupId>com.lucazamador</groupId>
                   <artifactId>drools-monitoring-engine</artifactId>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>com.lucazamador</groupId>
+                  <artifactId>drools-monitoring-model</artifactId>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>commons-collections</groupId>
+                  <artifactId>commons-collections</artifactId>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.slf4j</groupId>
+                  <artifactId>slf4j-api</artifactId>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.slf4j</groupId>
+                  <artifactId>slf4j-log4j12</artifactId>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>log4j</groupId>
+                  <artifactId>log4j</artifactId>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>com.thoughtworks.xstream</groupId>
+                  <artifactId>xstream</artifactId>
                 </artifactItem>
               </artifactItems>
             </configuration>

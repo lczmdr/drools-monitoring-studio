@@ -9,10 +9,9 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
 
-import com.lucazamador.drools.monitoring.studio.model.DroolsMonitor;
-import com.lucazamador.drools.monitoring.studio.model.KnowledgeBase;
+import com.lucazamador.drools.monitoring.studio.Application;
+import com.lucazamador.drools.monitoring.studio.console.ActivityConsoleFactory;
 import com.lucazamador.drools.monitoring.studio.model.KnowledgeSession;
-import com.lucazamador.drools.monitoring.studio.model.MonitoringAgent;
 
 public class NavigationView extends ViewPart {
 
@@ -31,7 +30,7 @@ public class NavigationView extends ViewPart {
         treeViewer.getTree().setLayout(fillLayout);
 
         treeViewer.setUseHashlookup(true);
-        treeViewer.setInput(getInitialStructure());
+        treeViewer.setInput(Application.getDroolsMonitor());
         treeViewer.expandAll();
         treeViewer.addDoubleClickListener(new IDoubleClickListener() {
             @Override
@@ -42,40 +41,24 @@ public class NavigationView extends ViewPart {
                 if (event.getSelection() instanceof IStructuredSelection) {
                     IStructuredSelection selection = (IStructuredSelection) event.getSelection();
                     Object element = selection.getFirstElement();
-                    System.out.println(element);
+                    if (element instanceof KnowledgeSession) {
+                        KnowledgeSession ksession = (KnowledgeSession) element;
+                        String activityConsoleId = ActivityConsoleFactory.getViewId(ksession);
+                        ActivityConsoleFactory.openActivityConsole(activityConsoleId);
+                    }
                 }
             }
         });
     }
 
-    public DroolsMonitor getInitialStructure() {
-        DroolsMonitor monitor = new DroolsMonitor();
-        MonitoringAgent agent1 = new MonitoringAgent();
-        agent1.setJvmId("jvm1");
-
-        KnowledgeBase kbase1 = new KnowledgeBase();
-        kbase1.setId("kbase1");
-        KnowledgeBase kbase2 = new KnowledgeBase();
-        kbase2.setId("kbase2");
-        agent1.addKnowledgeBase(kbase1);
-        agent1.addKnowledgeBase(kbase2);
-
-        KnowledgeSession ksession1 = new KnowledgeSession();
-        ksession1.setId("ksession1");
-        agent1.addKnowledgeSession(ksession1);
-
-        MonitoringAgent agent2 = new MonitoringAgent();
-        agent2.setJvmId("jvm2");
-
-        monitor.addMonitoringAgent(agent1);
-        monitor.addMonitoringAgent(agent2);
-
-        return monitor;
-    }
-
     @Override
     public void setFocus() {
 
+    }
+
+    public void refresh() {
+        treeViewer.setInput(Application.getDroolsMonitor());
+        treeViewer.expandAll();
     }
 
 }

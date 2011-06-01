@@ -49,6 +49,7 @@ public class MonitoringAgent {
     }
 
     public void addKnowledgeBase(KnowledgeBase knowledgeBase) {
+        knowledgeBase.setParent(this);
         this.knowledgeBases.add(knowledgeBase);
     }
 
@@ -61,6 +62,7 @@ public class MonitoringAgent {
     }
 
     public void addKnowledgeSession(KnowledgeSession knowledgeSession) {
+        knowledgeSession.setParent(this);
         this.knowledgeSessions.add(knowledgeSession);
     }
 

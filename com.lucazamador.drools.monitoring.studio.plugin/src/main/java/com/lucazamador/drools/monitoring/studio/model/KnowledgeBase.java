@@ -3,6 +3,7 @@ package com.lucazamador.drools.monitoring.studio.model;
 public class KnowledgeBase {
 
     private String id;
+    private MonitoringAgent parent;
 
     public String getId() {
         return id;
@@ -10,6 +11,14 @@ public class KnowledgeBase {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public MonitoringAgent getParent() {
+        return parent;
+    }
+
+    public void setParent(MonitoringAgent parent) {
+        this.parent = parent;
     }
 
 }
