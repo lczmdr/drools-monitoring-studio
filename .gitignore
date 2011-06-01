@@ -1,3 +1,4 @@
 .*
 !.gitignore
 target/
+com.lucazamador.drools.monitoring.studio.plugin/lib/
