@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         id="application"
+         point="org.eclipse.core.runtime.applications">
+      <application>
+         <run
+               class="com.lucazamador.drools.monitoring.studio.Application">
+         </run>
+      </application>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="com.lucazamador.drools.monitoring.studio.perspective.StudioPerspective"
+            fixed="true"
+            id="com.lucazamador.drools.monitoring.studio.perspective.studioPerspective"
+            name="Studio">
+      </perspective>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            id="addMonitoringAgent"
+            name="addMonitoringAgent">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="com.lucazamador.drools.monitoring.studio.view.DefaultView"
+            id="com.lucazamador.drools.monitoring.studio.view.defaultView"
+            name="Default View"
+            restorable="true">
+      </view>
+      <view
+            class="com.lucazamador.drools.monitoring.studio.view.NavigationView"
+            id="com.lucazamador.drools.monitoring.studio.view.navigationView"
+            name="Navigation View"
+            restorable="true">
+      </view>
+   </extension>
+   <extension
+         id="drools-monitoring-studio"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="com.lucazamador.drools.monitoring.studio.plugin.application"
+            name="drools-monitoring-studio">
+         <property
+               name="appName"
+               value="drools-monitoring-studio">
+         </property>
+         <property
+               name="aboutText"
+               value="Drools Monitoring Studio">
+         </property>
+      </product>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="addMonitoringAgent"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="Ctrl+A">
+      </key>
+      <key
+            commandId="org.eclipse.ui.file.exit"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="Ctrl+Q">
+      </key>
+   </extension>
+
+</plugin>
