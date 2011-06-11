@@ -27,11 +27,11 @@ public class ActivityConsoleFactory {
     }
 
     public static String getViewId(KnowledgeBase kbase) {
-        return kbase.getParent().getJvmId() + " - kbase: " + kbase.getId();
+        return kbase.getParent().getId() + " - kbase: " + kbase.getId();
     }
 
     public static String getViewId(KnowledgeSession ksession) {
-        return ksession.getParent().getJvmId() + " - ksession: " + ksession.getId();
+        return ksession.getParent().getId() + " - ksession: " + ksession.getId();
     }
 
 }

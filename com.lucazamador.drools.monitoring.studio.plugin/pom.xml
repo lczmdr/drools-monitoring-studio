@@ -42,6 +42,22 @@
       <groupId>com.thoughtworks.xstream</groupId>
       <artifactId>xstream</artifactId>
     </dependency>
+    <dependency>
+      <groupId>jfree</groupId>
+      <artifactId>jfreechart</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>jfree</groupId>
+      <artifactId>jfreechart-experimental</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>jfree</groupId>
+      <artifactId>jfreechart-swt</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>jfree</groupId>
+      <artifactId>jcommon</artifactId>
+    </dependency>
   </dependencies>
 
   <build>
@@ -63,7 +79,6 @@
               <overWriteSnapshots>false</overWriteSnapshots>
               <overWriteIfNewer>true</overWriteIfNewer>
               <overWriteIfNewer>true</overWriteIfNewer>
-              <transitive>true</transitive>
               <artifactItems>
                 <artifactItem>
                   <groupId>com.lucazamador</groupId>
@@ -92,6 +107,22 @@
                 <artifactItem>
                   <groupId>com.thoughtworks.xstream</groupId>
                   <artifactId>xstream</artifactId>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>jfree</groupId>
+                  <artifactId>jfreechart</artifactId>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>jfree</groupId>
+                  <artifactId>jfreechart-experimental</artifactId>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>jfree</groupId>
+                  <artifactId>jfreechart-swt</artifactId>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>jfree</groupId>
+                  <artifactId>jcommon</artifactId>
                 </artifactItem>
               </artifactItems>
             </configuration>

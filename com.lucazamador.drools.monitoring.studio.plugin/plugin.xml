@@ -26,6 +26,10 @@
             id="addMonitoringAgent"
             name="addMonitoringAgent">
       </command>
+      <command
+            id="removeMonitoringAgent"
+            name="removeMonitoringAgent">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.views">
@@ -36,9 +40,17 @@
             restorable="true">
       </view>
       <view
-            class="com.lucazamador.drools.monitoring.studio.view.NavigationView"
+            class="com.lucazamador.drools.monitoring.studio.view.MonitoringAgentView"
+            icon="src/main/resources/icons/bug.png"
             id="com.lucazamador.drools.monitoring.studio.view.navigationView"
-            name="Navigation View"
+            name="Monitoring Agents"
+            restorable="true">
+      </view>
+      <view
+            allowMultiple="true"
+            class="com.lucazamador.drools.monitoring.studio.view.GraphicView"
+            id="com.lucazamador.drools.monitoring.studio.view.graphicView"
+            name="Graphic View"
             restorable="true">
       </view>
    </extension>
@@ -65,6 +77,14 @@
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="Ctrl+A">
       </key>
+   </extension>
+   <extension
+         point="org.eclipse.ui.console.consolePageParticipants">
+      <consolePageParticipant
+            class="com.lucazamador.drools.monitoring.studio.view.ConsoleParticipant"
+            id="drools-monitoring-studio-plugin.consolePageParticipant1">
+         <enablement></enablement>
+      </consolePageParticipant>
    </extension>
 
 </plugin>

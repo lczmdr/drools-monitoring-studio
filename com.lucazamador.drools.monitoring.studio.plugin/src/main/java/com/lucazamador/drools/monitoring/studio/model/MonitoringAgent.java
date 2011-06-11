@@ -6,9 +6,11 @@ import java.util.List;
 public class MonitoringAgent {
 
     private DroolsMonitor parent;
-    private String jvmId;
+    private String id;
     private String address;
     private int port;
+    private int scanInterval;
+    private int recoveryInterval;
     private List<KnowledgeBase> knowledgeBases = new ArrayList<KnowledgeBase>();
     private List<KnowledgeSession> knowledgeSessions = new ArrayList<KnowledgeSession>();
 
@@ -20,12 +22,12 @@ public class MonitoringAgent {
         this.parent = parent;
     }
 
-    public String getJvmId() {
-        return jvmId;
+    public String getId() {
+        return id;
     }
 
-    public void setJvmId(String jvmId) {
-        this.jvmId = jvmId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getAddress() {
@@ -42,6 +44,22 @@ public class MonitoringAgent {
 
     public void setPort(int port) {
         this.port = port;
+    }
+
+    public int getScanInterval() {
+        return scanInterval;
+    }
+
+    public void setScanInterval(int scanInterval) {
+        this.scanInterval = scanInterval;
+    }
+
+    public int getRecoveryInterval() {
+        return recoveryInterval;
+    }
+
+    public void setRecoveryInterval(int recoveryInterval) {
+        this.recoveryInterval = recoveryInterval;
     }
 
     public List<KnowledgeBase> getKnowledgeBases() {

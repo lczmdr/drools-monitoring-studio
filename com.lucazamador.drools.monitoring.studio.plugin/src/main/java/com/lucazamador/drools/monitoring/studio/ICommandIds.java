@@ -10,5 +10,6 @@ package com.lucazamador.drools.monitoring.studio;
 public interface ICommandIds {
 
     public static final String ADD_MONITORING_AGENT = "addMonitoringAgent";
+    public static final String REMOVE_MONITORING_AGENT = "removeMonitoringAgent";
 
 }

@@ -15,9 +15,10 @@ public class MonitorLabelProvider extends LabelProvider {
     private ImageRegistry imageRegistry = new ImageRegistry();
 
     public MonitorLabelProvider() {
-        imageRegistry.put("agent", ImageDescriptor.createFromFile(MonitorLabelProvider.class, "/icons/agent.gif"));
-        imageRegistry.put("kbase", ImageDescriptor.createFromFile(MonitorLabelProvider.class, "/icons/kbase.gif"));
-        imageRegistry.put("ksession", ImageDescriptor.createFromFile(getClass(), "/icons/ksession.gif"));
+        imageRegistry
+                .put("agent", ImageDescriptor.createFromFile(MonitorLabelProvider.class, "/icons/drools_logo.png"));
+        imageRegistry.put("kbase", ImageDescriptor.createFromFile(MonitorLabelProvider.class, "/icons/kbase.png"));
+        imageRegistry.put("ksession", ImageDescriptor.createFromFile(getClass(), "/icons/ksession.png"));
     }
 
     public Image getImage(Object element) {
@@ -37,7 +38,8 @@ public class MonitorLabelProvider extends LabelProvider {
         if (element instanceof DroolsMonitor) {
             return "Drools Monitoring";
         } else if (element instanceof MonitoringAgent) {
-            return ((MonitoringAgent) element).getJvmId();
+            MonitoringAgent agent = (MonitoringAgent) element;
+            return agent.getId() + " (" + agent.getAddress() + ":" + agent.getPort() + ")";
         } else if (element instanceof KnowledgeBase) {
             return ((KnowledgeBase) element).getId();
         } else if (element instanceof KnowledgeSession) {

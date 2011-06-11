@@ -8,6 +8,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.ui.IWorkbenchWindow;
+import org.osgi.service.prefs.BackingStoreException;
 
 import com.lucazamador.drools.monitoring.cfg.MonitoringAgentConfiguration;
 import com.lucazamador.drools.monitoring.core.DroolsMonitoring;
@@ -17,12 +18,14 @@ import com.lucazamador.drools.monitoring.model.kbase.KnowledgeBaseInfo;
 import com.lucazamador.drools.monitoring.model.ksession.KnowledgeSessionInfo;
 import com.lucazamador.drools.monitoring.studio.Application;
 import com.lucazamador.drools.monitoring.studio.ICommandIds;
+import com.lucazamador.drools.monitoring.studio.cfg.ConfigurationManager;
 import com.lucazamador.drools.monitoring.studio.console.ActivityConsoleFactory;
 import com.lucazamador.drools.monitoring.studio.console.ActivityConsoleListener;
 import com.lucazamador.drools.monitoring.studio.model.KnowledgeBase;
 import com.lucazamador.drools.monitoring.studio.model.KnowledgeSession;
 import com.lucazamador.drools.monitoring.studio.model.MonitoringAgent;
-import com.lucazamador.drools.monitoring.studio.view.NavigationView;
+import com.lucazamador.drools.monitoring.studio.model.MonitoringAgentFactory;
+import com.lucazamador.drools.monitoring.studio.view.MonitoringAgentView;
 import com.lucazamador.drools.monitoring.studio.wizard.NewMonitoringAgentWizard;
 
 public class AddMonitoringAgentAction extends Action {
@@ -47,6 +50,7 @@ public class AddMonitoringAgentAction extends Action {
                 return;
             }
             MonitoringAgentConfiguration configuration = wizard.getConfiguration();
+
             DroolsMonitoring droolsMonitoring = Application.getDroolsMonitoring();
             try {
                 droolsMonitoring.addMonitoringAgent(configuration);
@@ -54,10 +58,8 @@ public class AddMonitoringAgentAction extends Action {
                 MessageDialog.openError(window.getShell(), "Error", e.getMessage());
                 return;
             }
-            MonitoringAgent agent = new MonitoringAgent();
-            agent.setJvmId(configuration.getId());
-            agent.setAddress(configuration.getAddress());
-            agent.setPort(configuration.getPort());
+            // update view model with a new monitoring agent object
+            MonitoringAgent agent = MonitoringAgentFactory.newMonitoringAgent(configuration);
             DroolsMonitoringAgent monitoringAgent = droolsMonitoring.getMonitoringAgent(configuration.getId());
             List<KnowledgeSessionInfo> ksessions = monitoringAgent.getDiscoveredKnowledgeSessions();
             for (KnowledgeSessionInfo ksessionInfo : ksessions) {
@@ -75,8 +77,18 @@ public class AddMonitoringAgentAction extends Action {
                 agent.addKnowledgeBase(kbase);
             }
             Application.getDroolsMonitor().addMonitoringAgent(agent);
-            NavigationView navigationView = (NavigationView) window.getActivePage().findView(NavigationView.ID);
+            // update navigation view
+            MonitoringAgentView navigationView = (MonitoringAgentView) window.getActivePage().findView(
+                    MonitoringAgentView.ID);
             navigationView.refresh();
+
+            ConfigurationManager reader = new ConfigurationManager();
+            try {
+                reader.store(configuration);
+            } catch (BackingStoreException e) {
+                e.printStackTrace();
+                MessageDialog.openError(window.getShell(), "error", "Storing agent configuration");
+            }
         }
     }
 

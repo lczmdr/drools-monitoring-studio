@@ -26,8 +26,10 @@ public class ActivityConsoleListener implements DroolsMonitoringListener {
         if (messageConsoleStream != null) {
             if (metric instanceof KnowledgeSessionMetric) {
                 KnowledgeSessionMetric ksessionMetric = (KnowledgeSessionMetric) metric;
-                messageConsoleStream.println("average firing time: " + ksessionMetric.getAverageFiringTime()
-                        + " total fact count: " + ksessionMetric.getTotalFactCount());
+                if (!messageConsoleStream.isClosed()) {
+                    messageConsoleStream.println("average firing time: " + ksessionMetric.getAverageFiringTime()
+                            + " total fact count: " + ksessionMetric.getTotalFactCount());
+                }
             }
         }
     }

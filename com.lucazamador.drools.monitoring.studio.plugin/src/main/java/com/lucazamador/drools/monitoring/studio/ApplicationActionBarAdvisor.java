@@ -1,14 +1,8 @@
 package com.lucazamador.drools.monitoring.studio;
 
 import org.eclipse.jface.action.Action;
-import org.eclipse.jface.action.ICoolBarManager;
 import org.eclipse.jface.action.IMenuManager;
-import org.eclipse.jface.action.IToolBarManager;
-import org.eclipse.jface.action.Separator;
-import org.eclipse.jface.action.ToolBarContributionItem;
-import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.swt.SWT;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.actions.ActionFactory.IWorkbenchAction;
@@ -36,14 +30,6 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
     }
 
     protected void fillMenuBar(IMenuManager menuBar) {
-    }
-
-    protected void fillCoolBar(ICoolBarManager coolBar) {
-        IToolBarManager toolbar = new ToolBarManager(SWT.FLAT | SWT.RIGHT);
-        coolBar.add(new ToolBarContributionItem(toolbar, "Drools Monitoring Studio"));
-        toolbar.add(addMonitoringAgent);
-        toolbar.add(new Separator());
-        toolbar.add(exitAction);
     }
 
 }
