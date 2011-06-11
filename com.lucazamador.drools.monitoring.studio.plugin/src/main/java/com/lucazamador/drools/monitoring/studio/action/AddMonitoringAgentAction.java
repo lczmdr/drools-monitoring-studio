@@ -61,20 +61,22 @@ public class AddMonitoringAgentAction extends Action {
             // update view model with a new monitoring agent object
             MonitoringAgent agent = MonitoringAgentFactory.newMonitoringAgent(configuration);
             DroolsMonitoringAgent monitoringAgent = droolsMonitoring.getMonitoringAgent(configuration.getId());
-            List<KnowledgeSessionInfo> ksessions = monitoringAgent.getDiscoveredKnowledgeSessions();
-            for (KnowledgeSessionInfo ksessionInfo : ksessions) {
-                KnowledgeSession ksession = new KnowledgeSession();
-                ksession.setId(String.valueOf(ksessionInfo.getId()));
-                agent.addKnowledgeSession(ksession);
-                ActivityConsoleListener listener = new ActivityConsoleListener(
-                        ActivityConsoleFactory.getViewId(ksession));
-                monitoringAgent.registerListener(listener);
-            }
-            List<KnowledgeBaseInfo> kbases = monitoringAgent.getDiscoveredKnowledgeBases();
-            for (KnowledgeBaseInfo kbaseInfo : kbases) {
-                KnowledgeBase kbase = new KnowledgeBase();
-                kbase.setId(String.valueOf(kbaseInfo.getId()));
-                agent.addKnowledgeBase(kbase);
+            if (monitoringAgent.isConnected()) {
+                List<KnowledgeSessionInfo> ksessions = monitoringAgent.getDiscoveredKnowledgeSessions();
+                for (KnowledgeSessionInfo ksessionInfo : ksessions) {
+                    KnowledgeSession ksession = new KnowledgeSession();
+                    ksession.setId(String.valueOf(ksessionInfo.getId()));
+                    agent.addKnowledgeSession(ksession);
+                    ActivityConsoleListener listener = new ActivityConsoleListener(
+                            ActivityConsoleFactory.getViewId(ksession));
+                    monitoringAgent.registerListener(listener);
+                }
+                List<KnowledgeBaseInfo> kbases = monitoringAgent.getDiscoveredKnowledgeBases();
+                for (KnowledgeBaseInfo kbaseInfo : kbases) {
+                    KnowledgeBase kbase = new KnowledgeBase();
+                    kbase.setId(String.valueOf(kbaseInfo.getId()));
+                    agent.addKnowledgeBase(kbase);
+                }
             }
             Application.getDroolsMonitor().addMonitoringAgent(agent);
             // update navigation view
