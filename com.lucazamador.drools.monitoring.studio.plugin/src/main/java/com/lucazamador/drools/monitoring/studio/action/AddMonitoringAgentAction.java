@@ -62,6 +62,7 @@ public class AddMonitoringAgentAction extends Action {
             MonitoringAgent agent = MonitoringAgentFactory.newMonitoringAgent(configuration);
             DroolsMonitoringAgent monitoringAgent = droolsMonitoring.getMonitoringAgent(configuration.getId());
             if (monitoringAgent.isConnected()) {
+                agent.setConnected(true);
                 List<KnowledgeSessionInfo> ksessions = monitoringAgent.getDiscoveredKnowledgeSessions();
                 for (KnowledgeSessionInfo ksessionInfo : ksessions) {
                     KnowledgeSession ksession = new KnowledgeSession();

@@ -11,6 +11,7 @@ public class MonitoringAgent {
     private int port;
     private int scanInterval;
     private int recoveryInterval;
+    private boolean connected;
     private List<KnowledgeBase> knowledgeBases = new ArrayList<KnowledgeBase>();
     private List<KnowledgeSession> knowledgeSessions = new ArrayList<KnowledgeSession>();
 
@@ -60,6 +61,14 @@ public class MonitoringAgent {
 
     public void setRecoveryInterval(int recoveryInterval) {
         this.recoveryInterval = recoveryInterval;
+    }
+
+    public boolean isConnected() {
+        return connected;
+    }
+
+    public void setConnected(boolean connected) {
+        this.connected = connected;
     }
 
     public List<KnowledgeBase> getKnowledgeBases() {

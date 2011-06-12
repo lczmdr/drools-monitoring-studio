@@ -15,8 +15,9 @@ public class MonitorLabelProvider extends LabelProvider {
     private ImageRegistry imageRegistry = new ImageRegistry();
 
     public MonitorLabelProvider() {
-        imageRegistry
-                .put("agent", ImageDescriptor.createFromFile(MonitorLabelProvider.class, "/icons/drools_logo.png"));
+        imageRegistry.put("agent", ImageDescriptor.createFromFile(MonitorLabelProvider.class, "/icons/agent.png"));
+        imageRegistry.put("agent-disabled",
+                ImageDescriptor.createFromFile(MonitorLabelProvider.class, "/icons/agent_disabled.png"));
         imageRegistry.put("kbase", ImageDescriptor.createFromFile(MonitorLabelProvider.class, "/icons/kbase.png"));
         imageRegistry.put("ksession", ImageDescriptor.createFromFile(getClass(), "/icons/ksession.png"));
     }
@@ -25,7 +26,12 @@ public class MonitorLabelProvider extends LabelProvider {
         if (element instanceof DroolsMonitor) {
             return imageRegistry.get("monitor");
         } else if (element instanceof MonitoringAgent) {
-            return imageRegistry.get("agent");
+            MonitoringAgent agent = (MonitoringAgent) element;
+            if (agent.isConnected()) {
+                return imageRegistry.get("agent");
+            } else {
+                return imageRegistry.get("agent-disabled");
+            }
         } else if (element instanceof KnowledgeBase) {
             return imageRegistry.get("kbase");
         } else if (element instanceof KnowledgeSession) {

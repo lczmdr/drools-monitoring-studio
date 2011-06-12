@@ -28,6 +28,7 @@ public class RecoveryStudioListener implements MonitoringRecoveryListener {
     public void reconnected(final String agentId) {
         DroolsMonitoringAgent monitoringAgent = Application.getDroolsMonitoring().getMonitoringAgent(agentId);
         MonitoringAgent agent = Application.getDroolsMonitor().getMonitoringAgent(agentId);
+        agent.setConnected(true);
         agent.clear();
         List<KnowledgeSessionInfo> ksessions = monitoringAgent.getDiscoveredKnowledgeSessions();
         for (KnowledgeSessionInfo ksessionInfo : ksessions) {
@@ -50,6 +51,7 @@ public class RecoveryStudioListener implements MonitoringRecoveryListener {
     public void disconnected(String agentId) {
         MonitoringAgent agent = Application.getDroolsMonitor().getMonitoringAgent(agentId);
         if (agent != null) {
+            agent.setConnected(false);
             agent.clear();
             refreshMonitoringAgents();
         }
@@ -62,7 +64,6 @@ public class RecoveryStudioListener implements MonitoringRecoveryListener {
                 MonitoringAgentView navigationView = (MonitoringAgentView) window.getActivePage().findView(
                         MonitoringAgentView.ID);
                 navigationView.refresh();
-
             }
         });
     }
