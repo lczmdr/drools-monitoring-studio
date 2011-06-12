@@ -2,6 +2,7 @@ package com.lucazamador.drools.monitoring.studio.wizard;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -32,7 +33,7 @@ import com.lucazamador.drools.monitoring.studio.view.sorter.MonitoringMetricSort
 public class NewGraphicPage1 extends WizardPage {
 
     private Composite container;
-    private String graphicId;
+    private String graphicId = "";
     private ListViewer availableMetricsListViewer;
     private ListViewer selectedMetricsListViewer;
     private List<MonitoringMetric> availableMetrics;
@@ -103,16 +104,17 @@ public class NewGraphicPage1 extends WizardPage {
             public void widgetSelected(SelectionEvent e) {
                 IStructuredSelection selection = (IStructuredSelection) availableMetricsListViewer.getSelection();
                 if (selection != null) {
-                    Object object = selection.getFirstElement();
-                    if (object != null) {
+                    Iterator<?> selectionIterator = selection.iterator();
+                    while (selectionIterator.hasNext()) {
+                        Object object = (Object) selectionIterator.next();
                         MonitoringMetric monitoringMetric = (MonitoringMetric) object;
                         availableMetrics.remove(monitoringMetric);
                         selectedMetrics.add(monitoringMetric);
                         availableMetricsListViewer.refresh();
                         selectedMetricsListViewer.refresh();
-                        selectFirstElement(availableMetricsListViewer.getList());
-                        setPageComplete(pageComplete());
                     }
+                    selectFirstElement(availableMetricsListViewer.getList());
+                    setPageComplete(pageComplete());
                 }
             }
         });
@@ -124,16 +126,17 @@ public class NewGraphicPage1 extends WizardPage {
             public void widgetSelected(SelectionEvent e) {
                 IStructuredSelection selection = (IStructuredSelection) selectedMetricsListViewer.getSelection();
                 if (selection != null) {
-                    Object object = selection.getFirstElement();
-                    if (object != null) {
+                    Iterator<?> selectionIterator = selection.iterator();
+                    while (selectionIterator.hasNext()) {
+                        Object object = (Object) selectionIterator.next();
                         MonitoringMetric monitoringMetric = (MonitoringMetric) object;
                         selectedMetrics.remove(monitoringMetric);
                         availableMetrics.add(monitoringMetric);
                         availableMetricsListViewer.refresh();
                         selectedMetricsListViewer.refresh();
-                        selectFirstElement(selectedMetricsListViewer.getList());
-                        setPageComplete(pageComplete());
                     }
+                    selectFirstElement(selectedMetricsListViewer.getList());
+                    setPageComplete(pageComplete());
                 }
             }
         });
