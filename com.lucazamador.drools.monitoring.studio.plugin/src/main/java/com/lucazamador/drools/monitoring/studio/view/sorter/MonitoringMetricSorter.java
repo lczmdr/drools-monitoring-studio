@@ -8,7 +8,7 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.swt.widgets.TableColumn;
 
-import com.lucazamador.drools.monitoring.studio.MonitoringMetric;
+import com.lucazamador.drools.monitoring.studio.model.MonitoringMetric;
 
 public class MonitoringMetricSorter extends ViewerSorter {
 

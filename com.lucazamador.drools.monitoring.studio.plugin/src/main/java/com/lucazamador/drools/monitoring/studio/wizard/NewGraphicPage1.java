@@ -26,8 +26,8 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-import com.lucazamador.drools.monitoring.studio.MonitoringMetric;
 import com.lucazamador.drools.monitoring.studio.model.Graphic;
+import com.lucazamador.drools.monitoring.studio.model.MonitoringMetric;
 import com.lucazamador.drools.monitoring.studio.view.sorter.MonitoringMetricSorter;
 
 public class NewGraphicPage1 extends WizardPage {

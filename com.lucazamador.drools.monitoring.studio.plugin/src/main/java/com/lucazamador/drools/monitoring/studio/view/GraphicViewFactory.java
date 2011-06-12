@@ -8,7 +8,7 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 
-import com.lucazamador.drools.monitoring.studio.MonitoringMetric;
+import com.lucazamador.drools.monitoring.studio.model.MonitoringMetric;
 
 public class GraphicViewFactory {
 

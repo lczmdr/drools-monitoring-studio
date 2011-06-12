@@ -24,7 +24,7 @@ import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.experimental.chart.swt.ChartComposite;
 import org.jfree.ui.RectangleInsets;
 
-import com.lucazamador.drools.monitoring.studio.MonitoringMetric;
+import com.lucazamador.drools.monitoring.studio.model.MonitoringMetric;
 
 public class GraphicView extends ViewPart {
 

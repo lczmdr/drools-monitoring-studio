@@ -2,7 +2,6 @@ package com.lucazamador.drools.monitoring.studio.model;
 
 import java.util.List;
 
-import com.lucazamador.drools.monitoring.studio.MonitoringMetric;
 
 public class Graphic {
 

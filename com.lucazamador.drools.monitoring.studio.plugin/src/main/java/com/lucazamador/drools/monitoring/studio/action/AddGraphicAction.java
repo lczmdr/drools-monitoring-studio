@@ -9,9 +9,9 @@ import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.ui.IWorkbenchWindow;
 
 import com.lucazamador.drools.monitoring.studio.ICommandIds;
-import com.lucazamador.drools.monitoring.studio.MonitoringMetric;
 import com.lucazamador.drools.monitoring.studio.model.Graphic;
 import com.lucazamador.drools.monitoring.studio.model.KnowledgeSession;
+import com.lucazamador.drools.monitoring.studio.model.MonitoringMetric;
 import com.lucazamador.drools.monitoring.studio.view.GraphicViewFactory;
 import com.lucazamador.drools.monitoring.studio.view.MonitoringAgentView;
 import com.lucazamador.drools.monitoring.studio.wizard.NewGraphicWizard;

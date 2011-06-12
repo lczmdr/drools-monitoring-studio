@@ -1,4 +1,4 @@
-package com.lucazamador.drools.monitoring.studio;
+package com.lucazamador.drools.monitoring.studio.model;
 
 public enum MonitoringMetric {
 

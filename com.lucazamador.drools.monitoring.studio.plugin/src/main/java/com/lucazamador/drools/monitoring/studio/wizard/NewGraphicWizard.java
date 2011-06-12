@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.eclipse.jface.wizard.Wizard;
 
-import com.lucazamador.drools.monitoring.studio.MonitoringMetric;
 import com.lucazamador.drools.monitoring.studio.model.Graphic;
+import com.lucazamador.drools.monitoring.studio.model.MonitoringMetric;
 
 public class NewGraphicWizard extends Wizard {
 
