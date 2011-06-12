@@ -88,4 +88,9 @@ public class MonitoringAgent {
         this.knowledgeSessions = knowledgeSessions;
     }
 
+    public void clear() {
+        this.knowledgeBases.clear();
+        this.knowledgeSessions.clear();
+    }
+
 }

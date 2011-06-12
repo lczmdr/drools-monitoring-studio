@@ -17,6 +17,10 @@ public class DroolsMonitor {
         this.monitoringAgents.put(agent.getId(), agent);
     }
 
+    public MonitoringAgent getMonitoringAgent(String id) {
+        return monitoringAgents.get(id);
+    }
+
     public MonitoringAgent removeMonitorAgent(String id) {
         return this.monitoringAgents.remove(id);
     }

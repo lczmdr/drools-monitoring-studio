@@ -1,5 +1,6 @@
-package com.lucazamador.drools.monitoring.studio.view;
+package com.lucazamador.drools.monitoring.studio.console;
 
+import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IViewPart;
@@ -13,7 +14,8 @@ import org.eclipse.ui.console.IConsolePageParticipant;
 import org.eclipse.ui.part.IPageBookViewPage;
 import org.eclipse.ui.part.IPageSite;
 
-import com.lucazamador.drools.monitoring.studio.action.AddMonitoringAgentAction;
+import com.lucazamador.drools.monitoring.studio.ICommandIds;
+import com.lucazamador.drools.monitoring.studio.action.RemoveMonitoringConsoleAction;
 
 public class ConsoleParticipant implements IConsolePageParticipant {
 
@@ -30,9 +32,20 @@ public class ConsoleParticipant implements IConsolePageParticipant {
         IViewSite viewSite = viewPart.getViewSite();
         IActionBars actionBars = viewSite.getActionBars();
         IToolBarManager toolBarManager = actionBars.getToolBarManager();
-        IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-        AddMonitoringAgentAction action = new AddMonitoringAgentAction(window, "test");
-        toolBarManager.appendToGroup("outputGroup", action);
+        IContributionItem[] items = toolBarManager.getItems();
+        boolean contains = false;
+        for (int i = 0; i < items.length; i++) {
+            if (items[i].getId() != null && items[i].getId().equals(ICommandIds.REMOVE_MONITORING_CONSOLE)) {
+                contains = true;
+                break;
+            }
+        }
+        if (!contains) {
+            IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+            RemoveMonitoringConsoleAction action = new RemoveMonitoringConsoleAction(window);
+            action.setEnabled(false);
+            toolBarManager.prependToGroup("outputGroup", action);
+        }
     }
 
     @Override

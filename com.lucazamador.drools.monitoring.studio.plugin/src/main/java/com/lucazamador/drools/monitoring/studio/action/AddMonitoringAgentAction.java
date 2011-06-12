@@ -38,7 +38,7 @@ public class AddMonitoringAgentAction extends Action {
         setToolTipText(label);
         setId(ICommandIds.ADD_MONITORING_AGENT);
         setActionDefinitionId(ICommandIds.ADD_MONITORING_AGENT);
-        setImageDescriptor(ImageDescriptor.createFromFile(getClass(), "/icons/add.png"));
+        setImageDescriptor(ImageDescriptor.createFromFile(getClass(), "/icons/add.gif"));
     }
 
     public void run() {

@@ -23,14 +23,14 @@ public class RemoveMonitoringAgentAction extends Action {
         setToolTipText(label);
         setId(ICommandIds.REMOVE_MONITORING_AGENT);
         setActionDefinitionId(ICommandIds.REMOVE_MONITORING_AGENT);
-        setImageDescriptor(ImageDescriptor.createFromFile(getClass(), "/icons/remove.png"));
+        setImageDescriptor(ImageDescriptor.createFromFile(getClass(), "/icons/remove.gif"));
     }
 
     public void run() {
         if (window != null) {
             if (MessageDialog.openConfirm(window.getShell(), "Information",
                     "Do you want to remove the monitoring agent " + monitoringAgent.getId() + " ?")) {
-                Application.getDroolsMonitoring().remove(monitoringAgent.getId());
+                Application.getDroolsMonitoring().removeMonitoringAgent(monitoringAgent.getId());
                 Application.getDroolsMonitor().removeMonitorAgent(monitoringAgent.getId());
                 // update navigation view
                 MonitoringAgentView navigationView = (MonitoringAgentView) window.getActivePage().findView(
