@@ -16,7 +16,7 @@ public class StudioPerspective implements IPerspectiveFactory {
         String editorArea = layout.getEditorArea();
         layout.setEditorAreaVisible(false);
 
-        layout.addStandaloneView(MonitoringAgentView.ID, true, IPageLayout.LEFT, 0.25f, editorArea);
+        layout.addStandaloneView(MonitoringAgentView.ID, true, IPageLayout.LEFT, 0.20f, editorArea);
 
         IFolderLayout folder = layout.createFolder("views", IPageLayout.TOP, 0.5f, editorArea);
         folder.addPlaceholder(GraphicView.ID + ":*");
