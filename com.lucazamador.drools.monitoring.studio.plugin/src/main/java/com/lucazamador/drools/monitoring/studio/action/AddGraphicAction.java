@@ -26,7 +26,7 @@ public class AddGraphicAction extends Action {
         setToolTipText("Add Graphic");
         setId(ICommandIds.ADD_GRAPHIC);
         setActionDefinitionId(ICommandIds.ADD_GRAPHIC);
-        setImageDescriptor(ImageDescriptor.createFromFile(getClass(), "/icons/chart.png"));
+        setImageDescriptor(ImageDescriptor.createFromFile(getClass(), "/icons/graphic.png"));
     }
 
     public void run() {

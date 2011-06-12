@@ -36,7 +36,7 @@ public class NewGraphicPage1 extends WizardPage {
     public NewGraphicPage1() {
         super("New graphic");
         setTitle("Create a new Graphic");
-        setImageDescriptor(ImageDescriptor.createFromFile(getClass(), "/icons/chart48.png"));
+        setImageDescriptor(ImageDescriptor.createFromFile(getClass(), "/icons/graphic48.png"));
     }
 
     @Override

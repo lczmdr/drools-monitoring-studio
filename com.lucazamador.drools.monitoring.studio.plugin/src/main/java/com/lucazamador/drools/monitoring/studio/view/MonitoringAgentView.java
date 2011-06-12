@@ -133,7 +133,7 @@ public class MonitoringAgentView extends ViewPart {
                 Object object = selection.getFirstElement();
                 if (object != null) {
                     if (object instanceof KnowledgeSession) {
-                        KnowledgeSession ksession = (KnowledgeSession)object;
+                        KnowledgeSession ksession = (KnowledgeSession) object;
                         manager.add(new AddGraphicAction(window, ksession));
                     } else {
                     }
@@ -143,6 +143,8 @@ public class MonitoringAgentView extends ViewPart {
         Menu menu = menuMgr.createContextMenu(treeViewer.getControl());
         treeViewer.getControl().setMenu(menu);
         getSite().registerContextMenu(menuMgr, treeViewer);
+
+        treeViewer.getTree().setFocus();
 
         initialize();
     }

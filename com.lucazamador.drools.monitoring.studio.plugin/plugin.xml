@@ -51,7 +51,7 @@
       <view
             allowMultiple="true"
             class="com.lucazamador.drools.monitoring.studio.view.GraphicView"
-            icon="src/main/resources/icons/chart.png"
+            icon="src/main/resources/icons/graphic.png"
             id="com.lucazamador.drools.monitoring.studio.view.graphicView"
             name="Graphic View"
             restorable="true">
