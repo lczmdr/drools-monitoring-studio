@@ -83,6 +83,7 @@ public class NewGraphicPage1 extends WizardPage {
                         selectedMetrics.add(monitoringMetric);
                         availableMetricsListViewer.refresh();
                         selectedMetricsListViewer.refresh();
+                        selectFirstElement(availableMetricsListViewer.getList());
                         setPageComplete(selectedMetrics.size() > 0);
                     }
                 }
@@ -103,6 +104,7 @@ public class NewGraphicPage1 extends WizardPage {
                         availableMetrics.add(monitoringMetric);
                         availableMetricsListViewer.refresh();
                         selectedMetricsListViewer.refresh();
+                        selectFirstElement(selectedMetricsListViewer.getList());
                         setPageComplete(selectedMetrics.size() > 0);
                     }
                 }
@@ -122,6 +124,12 @@ public class NewGraphicPage1 extends WizardPage {
         setControl(container);
         setPageComplete(false);
 
+    }
+
+    protected void selectFirstElement(org.eclipse.swt.widgets.List list) {
+        if (list.getItemCount() > 0) {
+            list.select(0);
+        }
     }
 
     private IStructuredContentProvider createContentProvider() {
