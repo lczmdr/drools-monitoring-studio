@@ -1,20 +1,29 @@
 package com.lucazamador.drools.monitoring.studio.model;
 
+import java.util.Date;
 import java.util.List;
-
 
 public class Graphic {
 
-    private String id;
+    private long id;
+    private String name;
     private KnowledgeSession parent;
     private List<MonitoringMetric> metrics;
 
-    public String getId() {
+    public Graphic() {
+        id = new Date().getTime();
+    }
+
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public KnowledgeSession getParent() {

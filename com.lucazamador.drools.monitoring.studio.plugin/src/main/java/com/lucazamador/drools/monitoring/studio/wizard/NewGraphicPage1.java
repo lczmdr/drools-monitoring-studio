@@ -35,7 +35,7 @@ import com.lucazamador.drools.monitoring.studio.view.sorter.MonitoringMetricSort
 public class NewGraphicPage1 extends WizardPage {
 
     private Composite container;
-    private String graphicId = "";
+    private String graphicName = "";
     private ListViewer availableMetricsListViewer;
     private ListViewer selectedMetricsListViewer;
     private List<MonitoringMetric> availableMetrics;
@@ -65,13 +65,13 @@ public class NewGraphicPage1 extends WizardPage {
         Label label = new Label(graphicIdComposite, SWT.NONE);
         label.setText("Graphic ID:");
 
-        final Text graphicIdText = new Text(graphicIdComposite, SWT.BORDER);
+        final Text graphicNameText = new Text(graphicIdComposite, SWT.BORDER);
         gridData = new GridData();
         gridData.widthHint = 150;
-        graphicIdText.setLayoutData(gridData);
-        graphicIdText.addModifyListener(new ModifyListener() {
+        graphicNameText.setLayoutData(gridData);
+        graphicNameText.addModifyListener(new ModifyListener() {
             public void modifyText(ModifyEvent e) {
-                graphicId = graphicIdText.getText().trim();
+                graphicName = graphicNameText.getText().trim();
                 setPageComplete(pageComplete());
             }
         });
@@ -152,7 +152,7 @@ public class NewGraphicPage1 extends WizardPage {
     }
 
     private boolean pageComplete() {
-        return selectedMetrics.size() > 0 && graphicId.length() > 0;
+        return selectedMetrics.size() > 0 && graphicName.length() > 0;
     }
 
     private void addSelectedMetrics() {
@@ -212,8 +212,8 @@ public class NewGraphicPage1 extends WizardPage {
         return container;
     }
 
-    public String getGraphicId() {
-        return graphicId;
+    public String getGraphicName() {
+        return graphicName;
     }
 
     public List<MonitoringMetric> getSelectedMetrics() {

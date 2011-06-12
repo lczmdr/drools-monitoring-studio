@@ -18,10 +18,11 @@ public class GraphicViewFactory {
         IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
         try {
             KnowledgeSession ksession = graphic.getParent();
-            String viewId = ksession.getParent().getId() + " - " + ksession.getId() + " - " + graphic.getId();
-            GraphicView graphicView = (GraphicView) window.getActivePage().showView(GraphicView.ID, viewId,
+            String viewName = ksession.getParent().getId() + " - " + ksession.getId() + " - " + graphic.getName();
+            String viewTitle = viewName.concat(String.valueOf(graphic.getId()));
+            GraphicView graphicView = (GraphicView) window.getActivePage().showView(GraphicView.ID, viewTitle,
                     IWorkbenchPage.VIEW_ACTIVATE);
-            graphicView.setViewTitle(viewId);
+            graphicView.setViewTitle(viewName);
             graphicView.setMetrics(selectedMetrics);
             graphicView.setAgentId(ksession.getParent().getId());
             graphicView.setKnowledgeSessionId(ksession.getId());

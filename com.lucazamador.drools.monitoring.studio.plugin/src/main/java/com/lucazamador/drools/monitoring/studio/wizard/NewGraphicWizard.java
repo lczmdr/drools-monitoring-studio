@@ -28,8 +28,8 @@ public class NewGraphicWizard extends Wizard {
         return page1.isPageComplete();
     }
 
-    public String getGraphicId() {
-        return page1.getGraphicId();
+    public String getGraphicName() {
+        return page1.getGraphicName();
     }
 
     public List<MonitoringMetric> getSelectedMetrics() {

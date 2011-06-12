@@ -54,7 +54,7 @@ public class MonitorLabelProvider extends LabelProvider {
         } else if (element instanceof KnowledgeSession) {
             return ((KnowledgeSession) element).getId();
         } else if (element instanceof Graphic) {
-            return ((Graphic) element).getId();
+            return ((Graphic) element).getName();
         }
         return null;
     }

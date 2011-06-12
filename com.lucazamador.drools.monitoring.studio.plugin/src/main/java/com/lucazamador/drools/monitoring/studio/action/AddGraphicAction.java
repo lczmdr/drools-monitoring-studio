@@ -40,9 +40,9 @@ public class AddGraphicAction extends Action {
                 return;
             }
             List<MonitoringMetric> selectedMetrics = wizard.getSelectedMetrics();
-            String graphicId = wizard.getGraphicId();
+            String graphicName = wizard.getGraphicName();
             Graphic graphic = new Graphic();
-            graphic.setId(graphicId);
+            graphic.setName(graphicName);
             graphic.setParent(ksession);
             graphic.setMetrics(selectedMetrics);
             ksession.addGraphic(graphic);
