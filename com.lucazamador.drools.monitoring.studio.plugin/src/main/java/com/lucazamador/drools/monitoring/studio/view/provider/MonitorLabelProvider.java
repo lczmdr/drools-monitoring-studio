@@ -6,6 +6,7 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
 
 import com.lucazamador.drools.monitoring.studio.model.DroolsMonitor;
+import com.lucazamador.drools.monitoring.studio.model.Graphic;
 import com.lucazamador.drools.monitoring.studio.model.KnowledgeBase;
 import com.lucazamador.drools.monitoring.studio.model.KnowledgeSession;
 import com.lucazamador.drools.monitoring.studio.model.MonitoringAgent;
@@ -20,6 +21,7 @@ public class MonitorLabelProvider extends LabelProvider {
                 ImageDescriptor.createFromFile(MonitorLabelProvider.class, "/icons/agent_disabled.png"));
         imageRegistry.put("kbase", ImageDescriptor.createFromFile(MonitorLabelProvider.class, "/icons/kbase.png"));
         imageRegistry.put("ksession", ImageDescriptor.createFromFile(getClass(), "/icons/ksession.png"));
+        imageRegistry.put("graphic", ImageDescriptor.createFromFile(getClass(), "/icons/graphic.png"));
     }
 
     public Image getImage(Object element) {
@@ -29,13 +31,14 @@ public class MonitorLabelProvider extends LabelProvider {
             MonitoringAgent agent = (MonitoringAgent) element;
             if (agent.isConnected()) {
                 return imageRegistry.get("agent");
-            } else {
-                return imageRegistry.get("agent-disabled");
             }
+            return imageRegistry.get("agent-disabled");
         } else if (element instanceof KnowledgeBase) {
             return imageRegistry.get("kbase");
         } else if (element instanceof KnowledgeSession) {
             return imageRegistry.get("ksession");
+        } else if (element instanceof Graphic) {
+            return imageRegistry.get("graphic");
         }
         return null;
     }
@@ -50,6 +53,8 @@ public class MonitorLabelProvider extends LabelProvider {
             return ((KnowledgeBase) element).getId();
         } else if (element instanceof KnowledgeSession) {
             return ((KnowledgeSession) element).getId();
+        } else if (element instanceof Graphic) {
+            return ((Graphic) element).getId();
         }
         return null;
     }

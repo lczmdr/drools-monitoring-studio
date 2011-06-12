@@ -75,7 +75,7 @@ public class AddMonitoringAgentAction extends Action {
                 List<KnowledgeBaseInfo> kbases = monitoringAgent.getDiscoveredKnowledgeBases();
                 for (KnowledgeBaseInfo kbaseInfo : kbases) {
                     KnowledgeBase kbase = new KnowledgeBase();
-                    kbase.setId(String.valueOf(kbaseInfo.getId()));
+                    kbase.setId(String.valueOf(kbaseInfo.getKnowledgeBaseId()));
                     agent.addKnowledgeBase(kbase);
                 }
             }

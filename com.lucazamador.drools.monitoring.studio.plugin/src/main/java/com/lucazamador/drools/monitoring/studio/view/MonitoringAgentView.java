@@ -35,6 +35,7 @@ import com.lucazamador.drools.monitoring.studio.action.RemoveMonitoringAgentActi
 import com.lucazamador.drools.monitoring.studio.cfg.ConfigurationManager;
 import com.lucazamador.drools.monitoring.studio.console.ActivityConsoleFactory;
 import com.lucazamador.drools.monitoring.studio.console.ActivityConsoleListener;
+import com.lucazamador.drools.monitoring.studio.model.Graphic;
 import com.lucazamador.drools.monitoring.studio.model.KnowledgeBase;
 import com.lucazamador.drools.monitoring.studio.model.KnowledgeSession;
 import com.lucazamador.drools.monitoring.studio.model.MonitoringAgent;
@@ -80,6 +81,9 @@ public class MonitoringAgentView extends ViewPart {
                         KnowledgeSession ksession = (KnowledgeSession) element;
                         String activityConsoleId = ActivityConsoleFactory.getViewId(ksession);
                         ActivityConsoleFactory.openActivityConsole(activityConsoleId);
+                    } else if (element instanceof Graphic) {
+                        Graphic graphic = (Graphic) element;
+                        GraphicViewFactory.openView(graphic.getId(), graphic.getMetrics());
                     }
                 }
             }
@@ -172,7 +176,7 @@ public class MonitoringAgentView extends ViewPart {
                         List<KnowledgeBaseInfo> kbases = monitoringAgent.getDiscoveredKnowledgeBases();
                         for (KnowledgeBaseInfo kbaseInfo : kbases) {
                             KnowledgeBase kbase = new KnowledgeBase();
-                            kbase.setId(String.valueOf(kbaseInfo.getId()));
+                            kbase.setId(String.valueOf(kbaseInfo.getKnowledgeBaseId()));
                             agent.addKnowledgeBase(kbase);
                         }
                     }

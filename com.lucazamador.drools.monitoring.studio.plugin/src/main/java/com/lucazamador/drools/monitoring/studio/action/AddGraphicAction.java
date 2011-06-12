@@ -10,8 +10,10 @@ import org.eclipse.ui.IWorkbenchWindow;
 
 import com.lucazamador.drools.monitoring.studio.ICommandIds;
 import com.lucazamador.drools.monitoring.studio.MonitoringMetric;
+import com.lucazamador.drools.monitoring.studio.model.Graphic;
 import com.lucazamador.drools.monitoring.studio.model.KnowledgeSession;
 import com.lucazamador.drools.monitoring.studio.view.GraphicViewFactory;
+import com.lucazamador.drools.monitoring.studio.view.MonitoringAgentView;
 import com.lucazamador.drools.monitoring.studio.wizard.NewGraphicWizard;
 
 public class AddGraphicAction extends Action {
@@ -31,17 +33,22 @@ public class AddGraphicAction extends Action {
 
     public void run() {
         if (window != null) {
-            NewGraphicWizard wizard = new NewGraphicWizard();
+            NewGraphicWizard wizard = new NewGraphicWizard(ksession.getGraphics());
             WizardDialog dialog = new WizardDialog(window.getShell(), wizard);
             dialog.open();
             if (dialog.getReturnCode() == Window.CANCEL) {
                 return;
             }
             List<MonitoringMetric> selectedMetrics = wizard.getSelectedMetrics();
-            for (MonitoringMetric monitoringMetric : selectedMetrics) {
-                System.out.println(monitoringMetric.getName());
-            }
-            GraphicViewFactory.openView(ksession.getParent().getId() + " - " + ksession.getId(), selectedMetrics);
+            String graphicId = wizard.getGraphicId();
+            Graphic graphic = new Graphic();
+            graphic.setId(graphicId);
+            graphic.setMetrics(selectedMetrics);
+            ksession.addGraphic(graphic);
+            MonitoringAgentView navigationView = (MonitoringAgentView) window.getActivePage().findView(
+                    MonitoringAgentView.ID);
+            navigationView.refresh();
+            GraphicViewFactory.openView(graphicId, selectedMetrics);
         }
     }
 

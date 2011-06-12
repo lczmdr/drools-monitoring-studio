@@ -5,6 +5,7 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 
 import com.lucazamador.drools.monitoring.studio.model.DroolsMonitor;
+import com.lucazamador.drools.monitoring.studio.model.KnowledgeSession;
 import com.lucazamador.drools.monitoring.studio.model.MonitoringAgent;
 
 public class MonitorContentProvider implements ITreeContentProvider {
@@ -24,6 +25,9 @@ public class MonitorContentProvider implements ITreeContentProvider {
             MonitoringAgent monitoringAgent = (MonitoringAgent) parentElement;
             return concat(monitoringAgent.getKnowledgeBases().toArray(), monitoringAgent.getKnowledgeSessions()
                     .toArray());
+        } else if (parentElement instanceof KnowledgeSession) {
+            KnowledgeSession ksession = (KnowledgeSession) parentElement;
+            return ksession.getGraphics().toArray();
         }
         return EMPTY_ARRAY;
     }

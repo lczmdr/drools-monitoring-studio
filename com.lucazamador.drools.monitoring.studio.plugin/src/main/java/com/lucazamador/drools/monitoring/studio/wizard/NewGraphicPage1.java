@@ -12,6 +12,8 @@ import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
@@ -21,19 +23,22 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
 
 import com.lucazamador.drools.monitoring.studio.MonitoringMetric;
+import com.lucazamador.drools.monitoring.studio.model.Graphic;
 import com.lucazamador.drools.monitoring.studio.view.sorter.MonitoringMetricSorter;
 
 public class NewGraphicPage1 extends WizardPage {
 
     private Composite container;
+    private String graphicId;
     private ListViewer availableMetricsListViewer;
     private ListViewer selectedMetricsListViewer;
     private List<MonitoringMetric> availableMetrics;
     private List<MonitoringMetric> selectedMetrics;
 
-    public NewGraphicPage1() {
+    public NewGraphicPage1(List<Graphic> graphics) {
         super("New graphic");
         setTitle("Create a new Graphic");
         setImageDescriptor(ImageDescriptor.createFromFile(getClass(), "/icons/graphic48.png"));
@@ -46,7 +51,29 @@ public class NewGraphicPage1 extends WizardPage {
         container = new Composite(parent, SWT.NONE);
         container.setLayout(layout);
 
-        Label label = new Label(container, SWT.NONE);
+        Composite graphicIdComposite = new Composite(container, SWT.NONE);
+        GridData gridData = new GridData();
+        gridData.horizontalSpan = 3;
+        graphicIdComposite.setLayoutData(gridData);
+        layout = new GridLayout();
+        layout.numColumns = 2;
+        graphicIdComposite.setLayout(layout);
+
+        Label label = new Label(graphicIdComposite, SWT.NONE);
+        label.setText("Graphic ID:");
+
+        final Text graphicIdText = new Text(graphicIdComposite, SWT.BORDER);
+        gridData = new GridData();
+        gridData.widthHint = 150;
+        graphicIdText.setLayoutData(gridData);
+        graphicIdText.addModifyListener(new ModifyListener() {
+            public void modifyText(ModifyEvent e) {
+                graphicId = graphicIdText.getText().trim();
+                setPageComplete(pageComplete());
+            }
+        });
+
+        label = new Label(container, SWT.NONE);
         label.setText("Available Metrics");
 
         label = new Label(container, SWT.NONE);
@@ -84,7 +111,7 @@ public class NewGraphicPage1 extends WizardPage {
                         availableMetricsListViewer.refresh();
                         selectedMetricsListViewer.refresh();
                         selectFirstElement(availableMetricsListViewer.getList());
-                        setPageComplete(selectedMetrics.size() > 0);
+                        setPageComplete(pageComplete());
                     }
                 }
             }
@@ -105,7 +132,7 @@ public class NewGraphicPage1 extends WizardPage {
                         availableMetricsListViewer.refresh();
                         selectedMetricsListViewer.refresh();
                         selectFirstElement(selectedMetricsListViewer.getList());
-                        setPageComplete(selectedMetrics.size() > 0);
+                        setPageComplete(pageComplete());
                     }
                 }
             }
@@ -124,6 +151,10 @@ public class NewGraphicPage1 extends WizardPage {
         setControl(container);
         setPageComplete(false);
 
+    }
+
+    private boolean pageComplete() {
+        return selectedMetrics.size() > 0 && graphicId.length() > 0;
     }
 
     protected void selectFirstElement(org.eclipse.swt.widgets.List list) {
@@ -164,6 +195,10 @@ public class NewGraphicPage1 extends WizardPage {
     @Override
     public Control getControl() {
         return container;
+    }
+
+    public String getGraphicId() {
+        return graphicId;
     }
 
     public List<MonitoringMetric> getSelectedMetrics() {

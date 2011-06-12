@@ -33,8 +33,7 @@ public class GraphicView extends ViewPart {
     private static String DATE_PATTERN = "hh:mm:ss";
 
     private TimeSeriesCollection dataset = new TimeSeriesCollection();
-    private TimeSeries pulseTimeSeries = new TimeSeries("Pulse");
-
+    private TimeSeries pulseTimeSeries = new TimeSeries(".");
     private List<MonitoringMetric> metrics;
 
     public void createPartControl(Composite parent) {
@@ -104,6 +103,7 @@ public class GraphicView extends ViewPart {
 
     public void setMetrics(List<MonitoringMetric> metrics) {
         this.metrics = metrics;
+        System.out.println("metrics size: " + this.metrics.size());
     }
 
 }
