@@ -23,6 +23,10 @@
    <extension
          point="org.eclipse.ui.commands">
       <command
+            id="addGraphic"
+            name="addGraphic">
+      </command>
+      <command
             id="addMonitoringAgent"
             name="addMonitoringAgent">
       </command>

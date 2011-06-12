@@ -3,6 +3,7 @@ package com.lucazamador.drools.monitoring.studio.view;
 import java.awt.Color;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -23,6 +24,8 @@ import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.experimental.chart.swt.ChartComposite;
 import org.jfree.ui.RectangleInsets;
 
+import com.lucazamador.drools.monitoring.studio.MonitoringMetric;
+
 public class GraphicView extends ViewPart {
 
     public static final String ID = "com.lucazamador.drools.monitoring.studio.view.graphicView";
@@ -31,6 +34,8 @@ public class GraphicView extends ViewPart {
 
     private TimeSeriesCollection dataset = new TimeSeriesCollection();
     private TimeSeries pulseTimeSeries = new TimeSeries("Pulse");
+
+    private List<MonitoringMetric> metrics;
 
     public void createPartControl(Composite parent) {
         Composite top = new Composite(parent, SWT.NONE);
@@ -95,6 +100,10 @@ public class GraphicView extends ViewPart {
     @Override
     public void setFocus() {
 
+    }
+
+    public void setMetrics(List<MonitoringMetric> metrics) {
+        this.metrics = metrics;
     }
 
 }

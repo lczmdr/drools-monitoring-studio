@@ -2,6 +2,9 @@ package com.lucazamador.drools.monitoring.studio.view;
 
 import java.util.List;
 
+import org.eclipse.jface.action.IMenuListener;
+import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
@@ -14,6 +17,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
@@ -25,6 +29,7 @@ import com.lucazamador.drools.monitoring.exception.DroolsMonitoringException;
 import com.lucazamador.drools.monitoring.model.kbase.KnowledgeBaseInfo;
 import com.lucazamador.drools.monitoring.model.ksession.KnowledgeSessionInfo;
 import com.lucazamador.drools.monitoring.studio.Application;
+import com.lucazamador.drools.monitoring.studio.action.AddGraphicAction;
 import com.lucazamador.drools.monitoring.studio.action.AddMonitoringAgentAction;
 import com.lucazamador.drools.monitoring.studio.action.RemoveMonitoringAgentAction;
 import com.lucazamador.drools.monitoring.studio.cfg.ConfigurationManager;
@@ -34,15 +39,16 @@ import com.lucazamador.drools.monitoring.studio.model.KnowledgeBase;
 import com.lucazamador.drools.monitoring.studio.model.KnowledgeSession;
 import com.lucazamador.drools.monitoring.studio.model.MonitoringAgent;
 import com.lucazamador.drools.monitoring.studio.model.MonitoringAgentFactory;
+import com.lucazamador.drools.monitoring.studio.view.provider.MonitorContentProvider;
+import com.lucazamador.drools.monitoring.studio.view.provider.MonitorLabelProvider;
 
 public class MonitoringAgentView extends ViewPart {
 
     public static final String ID = "com.lucazamador.drools.monitoring.studio.view.navigationView";
 
-    protected TreeViewer treeViewer;
-
     private IWorkbenchWindow window;
 
+    protected TreeViewer treeViewer;
     private RemoveMonitoringAgentAction removeAgentAction;
 
     public void createPartControl(Composite parent) {
@@ -74,7 +80,6 @@ public class MonitoringAgentView extends ViewPart {
                         KnowledgeSession ksession = (KnowledgeSession) element;
                         String activityConsoleId = ActivityConsoleFactory.getViewId(ksession);
                         ActivityConsoleFactory.openActivityConsole(activityConsoleId);
-                        GraphicViewFactory.openView(ksession.getParent().getId() + " - " + ksession.getId());
                     }
                 }
             }
@@ -118,6 +123,27 @@ public class MonitoringAgentView extends ViewPart {
         removeAgentAction.setEnabled(false);
         getViewSite().getActionBars().getToolBarManager().add(addAgentAction);
         getViewSite().getActionBars().getToolBarManager().add(removeAgentAction);
+
+        MenuManager menuMgr = new MenuManager();
+        menuMgr.setRemoveAllWhenShown(true);
+
+        menuMgr.addMenuListener(new IMenuListener() {
+            public void menuAboutToShow(IMenuManager manager) {
+                IStructuredSelection selection = (IStructuredSelection) treeViewer.getSelection();
+                Object object = selection.getFirstElement();
+                if (object != null) {
+                    if (object instanceof KnowledgeSession) {
+                        KnowledgeSession ksession = (KnowledgeSession)object;
+                        manager.add(new AddGraphicAction(window, ksession));
+                    } else {
+                    }
+                }
+            }
+        });
+        Menu menu = menuMgr.createContextMenu(treeViewer.getControl());
+        treeViewer.getControl().setMenu(menu);
+        getSite().registerContextMenu(menuMgr, treeViewer);
+
         initialize();
     }
 

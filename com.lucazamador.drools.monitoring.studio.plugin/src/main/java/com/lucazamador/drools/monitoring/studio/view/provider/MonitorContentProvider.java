@@ -1,4 +1,4 @@
-package com.lucazamador.drools.monitoring.studio.view;
+package com.lucazamador.drools.monitoring.studio.view.provider;
 
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.TreeViewer;

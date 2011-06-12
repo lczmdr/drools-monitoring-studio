@@ -1,4 +1,4 @@
-package com.lucazamador.drools.monitoring.studio.view;
+package com.lucazamador.drools.monitoring.studio.view.provider;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
