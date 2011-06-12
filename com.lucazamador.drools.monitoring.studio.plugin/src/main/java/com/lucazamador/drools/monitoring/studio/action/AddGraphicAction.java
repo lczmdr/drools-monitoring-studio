@@ -43,6 +43,7 @@ public class AddGraphicAction extends Action {
             String graphicId = wizard.getGraphicId();
             Graphic graphic = new Graphic();
             graphic.setId(graphicId);
+            graphic.setParent(ksession);
             graphic.setMetrics(selectedMetrics);
             ksession.addGraphic(graphic);
             MonitoringAgentView navigationView = (MonitoringAgentView) window.getActivePage().findView(

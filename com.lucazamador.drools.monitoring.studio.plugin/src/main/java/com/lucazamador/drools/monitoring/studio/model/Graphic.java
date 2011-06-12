@@ -7,6 +7,7 @@ import com.lucazamador.drools.monitoring.studio.MonitoringMetric;
 public class Graphic {
 
     private String id;
+    private KnowledgeSession parent;
     private List<MonitoringMetric> metrics;
 
     public String getId() {
@@ -15,6 +16,14 @@ public class Graphic {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public KnowledgeSession getParent() {
+        return parent;
+    }
+
+    public void setParent(KnowledgeSession parent) {
+        this.parent = parent;
     }
 
     public List<MonitoringMetric> getMetrics() {

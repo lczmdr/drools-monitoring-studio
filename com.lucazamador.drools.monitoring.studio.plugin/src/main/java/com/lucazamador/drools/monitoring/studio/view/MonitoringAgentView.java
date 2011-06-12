@@ -31,6 +31,7 @@ import com.lucazamador.drools.monitoring.model.ksession.KnowledgeSessionInfo;
 import com.lucazamador.drools.monitoring.studio.Application;
 import com.lucazamador.drools.monitoring.studio.action.AddGraphicAction;
 import com.lucazamador.drools.monitoring.studio.action.AddMonitoringAgentAction;
+import com.lucazamador.drools.monitoring.studio.action.RemoveGraphicAction;
 import com.lucazamador.drools.monitoring.studio.action.RemoveMonitoringAgentAction;
 import com.lucazamador.drools.monitoring.studio.cfg.ConfigurationManager;
 import com.lucazamador.drools.monitoring.studio.console.ActivityConsoleFactory;
@@ -139,7 +140,9 @@ public class MonitoringAgentView extends ViewPart {
                     if (object instanceof KnowledgeSession) {
                         KnowledgeSession ksession = (KnowledgeSession) object;
                         manager.add(new AddGraphicAction(window, ksession));
-                    } else {
+                    } else if (object instanceof Graphic) {
+                        Graphic graphic = (Graphic) object;
+                        manager.add(new RemoveGraphicAction(window, graphic));
                     }
                 }
             }

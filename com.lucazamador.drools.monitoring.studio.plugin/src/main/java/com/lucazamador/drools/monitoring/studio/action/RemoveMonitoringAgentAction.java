@@ -28,8 +28,8 @@ public class RemoveMonitoringAgentAction extends Action {
 
     public void run() {
         if (window != null) {
-            if (MessageDialog.openConfirm(window.getShell(), "Information",
-                    "Do you want to remove the monitoring agent " + monitoringAgent.getId() + " ?")) {
+            if (MessageDialog.openConfirm(window.getShell(), "Warning", "Do you want to remove the monitoring agent "
+                    + monitoringAgent.getId() + " ?")) {
                 Application.getDroolsMonitoring().removeMonitoringAgent(monitoringAgent.getId());
                 Application.getDroolsMonitor().removeMonitorAgent(monitoringAgent.getId());
                 // update navigation view
