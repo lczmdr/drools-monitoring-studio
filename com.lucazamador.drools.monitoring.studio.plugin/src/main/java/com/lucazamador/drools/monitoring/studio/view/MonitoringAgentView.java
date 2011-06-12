@@ -8,6 +8,8 @@ import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
@@ -99,6 +101,17 @@ public class MonitoringAgentView extends ViewPart {
                 widgetSelected(e);
             }
         });
+        treeViewer.getTree().addFocusListener(new FocusListener() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                removeAgentAction.setEnabled(false);
+            }
+
+            @Override
+            public void focusGained(FocusEvent e) {
+
+            }
+        });
 
         AddMonitoringAgentAction addAgentAction = new AddMonitoringAgentAction(window, "Add Monitor Agent");
         removeAgentAction = new RemoveMonitoringAgentAction(window, "Remove Monitor Agent");
@@ -118,6 +131,7 @@ public class MonitoringAgentView extends ViewPart {
                     droolsMonitoring.addMonitoringAgent(MonitoringAgentFactory.newMonitoringAgentConfiguration(agent));
                     DroolsMonitoringAgent monitoringAgent = droolsMonitoring.getMonitoringAgent(agent.getId());
                     if (monitoringAgent.isConnected()) {
+                        agent.setConnected(true);
                         List<KnowledgeSessionInfo> ksessions = monitoringAgent.getDiscoveredKnowledgeSessions();
                         for (KnowledgeSessionInfo ksessionInfo : ksessions) {
                             KnowledgeSession ksession = new KnowledgeSession();
