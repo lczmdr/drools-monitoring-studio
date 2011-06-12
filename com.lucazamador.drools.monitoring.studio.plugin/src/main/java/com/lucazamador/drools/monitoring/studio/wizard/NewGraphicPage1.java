@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -92,6 +94,12 @@ public class NewGraphicPage1 extends WizardPage {
         availableMetricsListViewer.setSorter(new MonitoringMetricSorter());
         availableMetricsListViewer.setInput(availableMetrics);
         availableMetricsListViewer.getList().setLayoutData(new GridData(180, 200));
+        availableMetricsListViewer.addDoubleClickListener(new IDoubleClickListener() {
+            @Override
+            public void doubleClick(DoubleClickEvent event) {
+                addSelectedMetrics();
+            }
+        });
 
         Composite buttons = new Composite(container, SWT.NONE);
         layout = new GridLayout();
@@ -102,20 +110,7 @@ public class NewGraphicPage1 extends WizardPage {
         addMetricButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                IStructuredSelection selection = (IStructuredSelection) availableMetricsListViewer.getSelection();
-                if (selection != null) {
-                    Iterator<?> selectionIterator = selection.iterator();
-                    while (selectionIterator.hasNext()) {
-                        Object object = (Object) selectionIterator.next();
-                        MonitoringMetric monitoringMetric = (MonitoringMetric) object;
-                        availableMetrics.remove(monitoringMetric);
-                        selectedMetrics.add(monitoringMetric);
-                        availableMetricsListViewer.refresh();
-                        selectedMetricsListViewer.refresh();
-                    }
-                    selectFirstElement(availableMetricsListViewer.getList());
-                    setPageComplete(pageComplete());
-                }
+                addSelectedMetrics();
             }
         });
 
@@ -158,6 +153,23 @@ public class NewGraphicPage1 extends WizardPage {
 
     private boolean pageComplete() {
         return selectedMetrics.size() > 0 && graphicId.length() > 0;
+    }
+
+    private void addSelectedMetrics() {
+        IStructuredSelection selection = (IStructuredSelection) availableMetricsListViewer.getSelection();
+        if (selection != null) {
+            Iterator<?> selectionIterator = selection.iterator();
+            while (selectionIterator.hasNext()) {
+                Object object = (Object) selectionIterator.next();
+                MonitoringMetric monitoringMetric = (MonitoringMetric) object;
+                availableMetrics.remove(monitoringMetric);
+                selectedMetrics.add(monitoringMetric);
+                availableMetricsListViewer.refresh();
+                selectedMetricsListViewer.refresh();
+            }
+            selectFirstElement(availableMetricsListViewer.getList());
+            setPageComplete(pageComplete());
+        }
     }
 
     protected void selectFirstElement(org.eclipse.swt.widgets.List list) {
