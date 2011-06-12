@@ -1,7 +1,5 @@
 package com.lucazamador.drools.monitoring.studio.action;
 
-import java.util.List;
-
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -14,15 +12,9 @@ import com.lucazamador.drools.monitoring.cfg.MonitoringAgentConfiguration;
 import com.lucazamador.drools.monitoring.core.DroolsMonitoring;
 import com.lucazamador.drools.monitoring.core.DroolsMonitoringAgent;
 import com.lucazamador.drools.monitoring.exception.DroolsMonitoringException;
-import com.lucazamador.drools.monitoring.model.kbase.KnowledgeBaseInfo;
-import com.lucazamador.drools.monitoring.model.ksession.KnowledgeSessionInfo;
 import com.lucazamador.drools.monitoring.studio.Application;
 import com.lucazamador.drools.monitoring.studio.ICommandIds;
 import com.lucazamador.drools.monitoring.studio.cfg.ConfigurationManager;
-import com.lucazamador.drools.monitoring.studio.console.ActivityConsoleFactory;
-import com.lucazamador.drools.monitoring.studio.console.ActivityConsoleListener;
-import com.lucazamador.drools.monitoring.studio.model.KnowledgeBase;
-import com.lucazamador.drools.monitoring.studio.model.KnowledgeSession;
 import com.lucazamador.drools.monitoring.studio.model.MonitoringAgent;
 import com.lucazamador.drools.monitoring.studio.model.MonitoringAgentFactory;
 import com.lucazamador.drools.monitoring.studio.view.MonitoringAgentView;
@@ -62,22 +54,7 @@ public class AddMonitoringAgentAction extends Action {
             MonitoringAgent agent = MonitoringAgentFactory.newMonitoringAgent(configuration);
             DroolsMonitoringAgent monitoringAgent = droolsMonitoring.getMonitoringAgent(configuration.getId());
             if (monitoringAgent.isConnected()) {
-                agent.setConnected(true);
-                List<KnowledgeSessionInfo> ksessions = monitoringAgent.getDiscoveredKnowledgeSessions();
-                for (KnowledgeSessionInfo ksessionInfo : ksessions) {
-                    KnowledgeSession ksession = new KnowledgeSession();
-                    ksession.setId(String.valueOf(ksessionInfo.getId()));
-                    agent.addKnowledgeSession(ksession);
-                    ActivityConsoleListener listener = new ActivityConsoleListener(
-                            ActivityConsoleFactory.getViewId(ksession));
-                    monitoringAgent.registerListener(listener);
-                }
-                List<KnowledgeBaseInfo> kbases = monitoringAgent.getDiscoveredKnowledgeBases();
-                for (KnowledgeBaseInfo kbaseInfo : kbases) {
-                    KnowledgeBase kbase = new KnowledgeBase();
-                    kbase.setId(String.valueOf(kbaseInfo.getKnowledgeBaseId()));
-                    agent.addKnowledgeBase(kbase);
-                }
+                agent.build(monitoringAgent);
             }
             Application.getDroolsMonitor().addMonitoringAgent(agent);
             // update navigation view

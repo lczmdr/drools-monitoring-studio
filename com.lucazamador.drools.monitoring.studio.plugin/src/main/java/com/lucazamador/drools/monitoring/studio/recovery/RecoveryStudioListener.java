@@ -1,18 +1,10 @@
 package com.lucazamador.drools.monitoring.studio.recovery;
 
-import java.util.List;
-
 import org.eclipse.ui.IWorkbenchWindow;
 
 import com.lucazamador.drools.monitoring.core.DroolsMonitoringAgent;
 import com.lucazamador.drools.monitoring.listener.MonitoringRecoveryListener;
-import com.lucazamador.drools.monitoring.model.kbase.KnowledgeBaseInfo;
-import com.lucazamador.drools.monitoring.model.ksession.KnowledgeSessionInfo;
 import com.lucazamador.drools.monitoring.studio.Application;
-import com.lucazamador.drools.monitoring.studio.console.ActivityConsoleFactory;
-import com.lucazamador.drools.monitoring.studio.console.ActivityConsoleListener;
-import com.lucazamador.drools.monitoring.studio.model.KnowledgeBase;
-import com.lucazamador.drools.monitoring.studio.model.KnowledgeSession;
 import com.lucazamador.drools.monitoring.studio.model.MonitoringAgent;
 import com.lucazamador.drools.monitoring.studio.view.MonitoringAgentView;
 
@@ -28,22 +20,7 @@ public class RecoveryStudioListener implements MonitoringRecoveryListener {
     public void reconnected(final String agentId) {
         DroolsMonitoringAgent monitoringAgent = Application.getDroolsMonitoring().getMonitoringAgent(agentId);
         MonitoringAgent agent = Application.getDroolsMonitor().getMonitoringAgent(agentId);
-        agent.setConnected(true);
-        agent.clear();
-        List<KnowledgeSessionInfo> ksessions = monitoringAgent.getDiscoveredKnowledgeSessions();
-        for (KnowledgeSessionInfo ksessionInfo : ksessions) {
-            KnowledgeSession ksession = new KnowledgeSession();
-            ksession.setId(String.valueOf(ksessionInfo.getId()));
-            agent.addKnowledgeSession(ksession);
-            ActivityConsoleListener listener = new ActivityConsoleListener(ActivityConsoleFactory.getViewId(ksession));
-            monitoringAgent.registerListener(listener);
-        }
-        List<KnowledgeBaseInfo> kbases = monitoringAgent.getDiscoveredKnowledgeBases();
-        for (KnowledgeBaseInfo kbaseInfo : kbases) {
-            KnowledgeBase kbase = new KnowledgeBase();
-            kbase.setId(String.valueOf(kbaseInfo.getKnowledgeBaseId()));
-            agent.addKnowledgeBase(kbase);
-        }
+        agent.build(monitoringAgent);
         refreshMonitoringAgents();
     }
 
