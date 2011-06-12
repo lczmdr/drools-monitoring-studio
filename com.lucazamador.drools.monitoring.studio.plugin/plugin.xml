@@ -38,12 +38,6 @@
    <extension
          point="org.eclipse.ui.views">
       <view
-            class="com.lucazamador.drools.monitoring.studio.view.DefaultView"
-            id="com.lucazamador.drools.monitoring.studio.view.defaultView"
-            name="Default View"
-            restorable="true">
-      </view>
-      <view
             class="com.lucazamador.drools.monitoring.studio.view.MonitoringAgentView"
             icon="src/main/resources/icons/bug.png"
             id="com.lucazamador.drools.monitoring.studio.view.navigationView"
