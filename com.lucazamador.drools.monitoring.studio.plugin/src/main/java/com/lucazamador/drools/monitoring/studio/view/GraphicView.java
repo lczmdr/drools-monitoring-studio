@@ -38,8 +38,10 @@ public class GraphicView extends ViewPart {
     private static String DATE_PATTERN = "hh:mm:ss";
 
     private IWorkbenchWindow window;
-    private TimeSeriesCollection dataset = new TimeSeriesCollection();
+    private String ksessionId;
+    private String agentId;
     private Map<MonitoringMetric, TimeSeries> timeSeries = new HashMap<MonitoringMetric, TimeSeries>();
+    private TimeSeriesCollection dataset = new TimeSeriesCollection();
     private List<MonitoringMetric> metrics;
     private JFreeChart chart;
     private boolean initialized;
@@ -73,12 +75,12 @@ public class GraphicView extends ViewPart {
     private JFreeChart createTimeSeriesChart() {
         JFreeChart chart = ChartFactory.createTimeSeriesChart("", "", "", dataset, true, true, false);
 
-        chart.setBackgroundPaint(Color.white);
+        chart.setBackgroundPaint(Color.WHITE);
 
         XYPlot plot = (XYPlot) chart.getPlot();
-        plot.setBackgroundPaint(Color.lightGray);
-        plot.setDomainGridlinePaint(Color.white);
-        plot.setRangeGridlinePaint(Color.white);
+        plot.setBackgroundPaint(Color.LIGHT_GRAY);
+        plot.setDomainGridlinePaint(Color.WHITE);
+        plot.setRangeGridlinePaint(Color.WHITE);
         plot.setAxisOffset(new RectangleInsets(5.0, 5.0, 5.0, 5.0));
         plot.setDomainCrosshairVisible(true);
         plot.setRangeCrosshairVisible(true);
@@ -100,42 +102,45 @@ public class GraphicView extends ViewPart {
         window.getShell().getDisplay().asyncExec(new Runnable() {
             @Override
             public void run() {
-                Set<MonitoringMetric> keySet = timeSeries.keySet();
-                for (MonitoringMetric metric : keySet) {
-                    TimeSeries timeSerie = timeSeries.get(metric);
-                    switch (metric) {
-                    case AVERATE_FIRING_TIME:
-                        timeSerie.addOrUpdate(new Millisecond(kmetric.getTimestamp()),
-                                new Double(kmetric.getAverageFiringTime()));
-                        break;
-                    case TOTAL_ACTIVATIONS_CANCELED:
-                        timeSerie.addOrUpdate(new Millisecond(kmetric.getTimestamp()),
-                                new Double(kmetric.getTotalActivationsCancelled()));
-                        break;
-                    case TOTAL_ACTIVATIONS_CREATED:
-                        timeSerie.addOrUpdate(new Millisecond(kmetric.getTimestamp()),
-                                new Double(kmetric.getTotalActivationsCreated()));
-                        break;
-                    case TOTAL_ACTIVATIONS_FIRED:
-                        timeSerie.addOrUpdate(new Millisecond(kmetric.getTimestamp()),
-                                new Double(kmetric.getTotalActivationsFired()));
-                        break;
-                    case TOTAL_FACT_COUNT:
-                        timeSerie.addOrUpdate(new Millisecond(kmetric.getTimestamp()),
-                                new Double(kmetric.getTotalFactCount()));
-                        break;
-                    case TOTAL_FIRING_TIME:
-                        timeSerie.addOrUpdate(new Millisecond(kmetric.getTimestamp()),
-                                new Double(kmetric.getTotalFiringTime()));
-                        break;
-                    case TOTAL_PROCESS_INSTANCES_COMPLETED:
-                        timeSerie.addOrUpdate(new Millisecond(kmetric.getTimestamp()),
-                                new Double(kmetric.getTotalProcessInstancesCompleted()));
-                        break;
-                    case TOTAL_PROCESS_INSTANCES_STARTED:
-                        timeSerie.addOrUpdate(new Millisecond(kmetric.getTimestamp()),
-                                new Double(kmetric.getTotalProcessInstancesStarted()));
-                        break;
+                if (kmetric.getAgentId().equals(agentId)
+                        && kmetric.getKnowledgeSessionId().toString().equals(ksessionId)) {
+                    Set<MonitoringMetric> keySet = timeSeries.keySet();
+                    for (MonitoringMetric metric : keySet) {
+                        TimeSeries timeSerie = timeSeries.get(metric);
+                        switch (metric) {
+                        case AVERATE_FIRING_TIME:
+                            timeSerie.addOrUpdate(new Millisecond(kmetric.getTimestamp()),
+                                    new Double(kmetric.getAverageFiringTime()));
+                            break;
+                        case TOTAL_ACTIVATIONS_CANCELED:
+                            timeSerie.addOrUpdate(new Millisecond(kmetric.getTimestamp()),
+                                    new Double(kmetric.getTotalActivationsCancelled()));
+                            break;
+                        case TOTAL_ACTIVATIONS_CREATED:
+                            timeSerie.addOrUpdate(new Millisecond(kmetric.getTimestamp()),
+                                    new Double(kmetric.getTotalActivationsCreated()));
+                            break;
+                        case TOTAL_ACTIVATIONS_FIRED:
+                            timeSerie.addOrUpdate(new Millisecond(kmetric.getTimestamp()),
+                                    new Double(kmetric.getTotalActivationsFired()));
+                            break;
+                        case TOTAL_FACT_COUNT:
+                            timeSerie.addOrUpdate(new Millisecond(kmetric.getTimestamp()),
+                                    new Double(kmetric.getTotalFactCount()));
+                            break;
+                        case TOTAL_FIRING_TIME:
+                            timeSerie.addOrUpdate(new Millisecond(kmetric.getTimestamp()),
+                                    new Double(kmetric.getTotalFiringTime()));
+                            break;
+                        case TOTAL_PROCESS_INSTANCES_COMPLETED:
+                            timeSerie.addOrUpdate(new Millisecond(kmetric.getTimestamp()),
+                                    new Double(kmetric.getTotalProcessInstancesCompleted()));
+                            break;
+                        case TOTAL_PROCESS_INSTANCES_STARTED:
+                            timeSerie.addOrUpdate(new Millisecond(kmetric.getTimestamp()),
+                                    new Double(kmetric.getTotalProcessInstancesStarted()));
+                            break;
+                        }
                     }
                 }
             }
@@ -153,6 +158,14 @@ public class GraphicView extends ViewPart {
 
     public void setMetrics(List<MonitoringMetric> metrics) {
         this.metrics = metrics;
+    }
+
+    public void setAgentId(String agentId) {
+        this.agentId = agentId;
+    }
+
+    public void setKnowledgeSessionId(String ksessionId) {
+        this.ksessionId = ksessionId;
     }
 
     public void initialize() {

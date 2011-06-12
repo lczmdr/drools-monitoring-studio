@@ -80,8 +80,7 @@ public class MonitoringAgentView extends ViewPart {
                         ActivityConsoleFactory.openActivityConsole(activityConsoleId);
                     } else if (element instanceof Graphic) {
                         Graphic graphic = (Graphic) element;
-                        String viewId = graphic.getParent().getParent().getId() + " - " + graphic.getId();
-                        GraphicViewFactory.openView(viewId, graphic.getMetrics());
+                        GraphicViewFactory.openView(graphic, graphic.getMetrics());
                     }
                 }
             }
