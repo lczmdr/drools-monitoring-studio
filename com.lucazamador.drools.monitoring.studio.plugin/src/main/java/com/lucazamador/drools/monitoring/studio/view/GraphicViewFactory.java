@@ -19,6 +19,7 @@ public class GraphicViewFactory {
                     IWorkbenchPage.VIEW_ACTIVATE);
             graphicView.setViewTitle(viewId);
             graphicView.setMetrics(selectedMetrics);
+            graphicView.initialize();
         } catch (PartInitException e) {
             MessageDialog.openError(window.getShell(), "Error", "Error opening graphic view");
         }

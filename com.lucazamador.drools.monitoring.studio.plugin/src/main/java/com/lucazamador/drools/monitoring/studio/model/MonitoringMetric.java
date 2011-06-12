@@ -3,7 +3,7 @@ package com.lucazamador.drools.monitoring.studio.model;
 public enum MonitoringMetric {
 
     AVERATE_FIRING_TIME("Average Firing Time"),
-    LAST_REST("Last Reset"),
+    LAST_RESET("Last Reset"),
     TOTAL_ACTIVATIONS_CANCELED("Total Activations Canceled"), 
     TOTAL_ACTIVATIONS_CREATED("Total Activations Created"),
     TOTAL_ACTIVATIONS_FIRED("Total Activations Fired"),
@@ -12,14 +12,14 @@ public enum MonitoringMetric {
     TOTAL_PROCESS_INSTANCES_COMPLETED("Total Process Instances Completed"),
     TOTAL_PROCESS_INSTANCES_STARTED("Total Process Instances Started");
 
-    private final String name;
+    private final String description;
 
-    MonitoringMetric(String name) {
-        this.name = name;
+    MonitoringMetric(String description) {
+        this.description = description;
     }
 
-    public String getName() {
-        return name;
+    public String getDescription() {
+        return description;
     }
 
 }

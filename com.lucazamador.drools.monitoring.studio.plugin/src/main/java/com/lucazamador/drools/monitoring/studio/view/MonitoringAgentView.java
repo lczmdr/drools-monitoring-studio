@@ -202,7 +202,7 @@ public class MonitoringAgentView extends ViewPart {
     }
 
     public void refresh() {
-        treeViewer.setInput(Application.getDroolsMonitor());
+        treeViewer.refresh();
         treeViewer.expandAll();
     }
 

@@ -190,7 +190,7 @@ public class NewGraphicPage1 extends WizardPage {
 
             public String getText(Object element) {
                 MonitoringMetric metric = (MonitoringMetric) element;
-                return metric.getName();
+                return metric.getDescription();
             }
         };
     }

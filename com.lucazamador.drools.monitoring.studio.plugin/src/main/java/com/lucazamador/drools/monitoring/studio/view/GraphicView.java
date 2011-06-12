@@ -2,8 +2,10 @@ package com.lucazamador.drools.monitoring.studio.view;
 
 import java.awt.Color;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -11,6 +13,8 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Spinner;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
@@ -24,6 +28,7 @@ import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.experimental.chart.swt.ChartComposite;
 import org.jfree.ui.RectangleInsets;
 
+import com.lucazamador.drools.monitoring.model.ksession.KnowledgeSessionMetric;
 import com.lucazamador.drools.monitoring.studio.model.MonitoringMetric;
 
 public class GraphicView extends ViewPart {
@@ -32,20 +37,23 @@ public class GraphicView extends ViewPart {
 
     private static String DATE_PATTERN = "hh:mm:ss";
 
+    private IWorkbenchWindow window;
     private TimeSeriesCollection dataset = new TimeSeriesCollection();
-    private TimeSeries pulseTimeSeries = new TimeSeries(".");
+    private Map<MonitoringMetric, TimeSeries> timeSeries = new HashMap<MonitoringMetric, TimeSeries>();
     private List<MonitoringMetric> metrics;
+    private JFreeChart chart;
+    private boolean initialized;
 
     public void createPartControl(Composite parent) {
+        window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+
         Composite top = new Composite(parent, SWT.NONE);
         GridLayout layout = new GridLayout();
         layout.marginHeight = 0;
         layout.marginWidth = 0;
         top.setLayout(layout);
 
-        dataset.addSeries(pulseTimeSeries);
-
-        JFreeChart chart = createTimeSeriesChart();
+        chart = createTimeSeriesChart();
         ChartComposite chartComposite = new ChartComposite(top, SWT.NONE, chart, true);
         chartComposite.setLayoutData(new GridData(GridData.FILL_BOTH));
 
@@ -88,8 +96,50 @@ public class GraphicView extends ViewPart {
         return chart;
     }
 
-    public void updateTimeSeriesPulseDataset(Date date, double value) {
-        pulseTimeSeries.addOrUpdate(new Millisecond(date), new Double(value));
+    public void updateGraphic(final KnowledgeSessionMetric kmetric) {
+        window.getShell().getDisplay().asyncExec(new Runnable() {
+            @Override
+            public void run() {
+                Set<MonitoringMetric> keySet = timeSeries.keySet();
+                for (MonitoringMetric metric : keySet) {
+                    TimeSeries timeSerie = timeSeries.get(metric);
+                    switch (metric) {
+                    case AVERATE_FIRING_TIME:
+                        timeSerie.addOrUpdate(new Millisecond(kmetric.getTimestamp()),
+                                new Double(kmetric.getAverageFiringTime()));
+                        break;
+                    case TOTAL_ACTIVATIONS_CANCELED:
+                        timeSerie.addOrUpdate(new Millisecond(kmetric.getTimestamp()),
+                                new Double(kmetric.getTotalActivationsCancelled()));
+                        break;
+                    case TOTAL_ACTIVATIONS_CREATED:
+                        timeSerie.addOrUpdate(new Millisecond(kmetric.getTimestamp()),
+                                new Double(kmetric.getTotalActivationsCreated()));
+                        break;
+                    case TOTAL_ACTIVATIONS_FIRED:
+                        timeSerie.addOrUpdate(new Millisecond(kmetric.getTimestamp()),
+                                new Double(kmetric.getTotalActivationsFired()));
+                        break;
+                    case TOTAL_FACT_COUNT:
+                        timeSerie.addOrUpdate(new Millisecond(kmetric.getTimestamp()),
+                                new Double(kmetric.getTotalFactCount()));
+                        break;
+                    case TOTAL_FIRING_TIME:
+                        timeSerie.addOrUpdate(new Millisecond(kmetric.getTimestamp()),
+                                new Double(kmetric.getTotalFiringTime()));
+                        break;
+                    case TOTAL_PROCESS_INSTANCES_COMPLETED:
+                        timeSerie.addOrUpdate(new Millisecond(kmetric.getTimestamp()),
+                                new Double(kmetric.getTotalProcessInstancesCompleted()));
+                        break;
+                    case TOTAL_PROCESS_INSTANCES_STARTED:
+                        timeSerie.addOrUpdate(new Millisecond(kmetric.getTimestamp()),
+                                new Double(kmetric.getTotalProcessInstancesStarted()));
+                        break;
+                    }
+                }
+            }
+        });
     }
 
     public void setViewTitle(String title) {
@@ -103,7 +153,20 @@ public class GraphicView extends ViewPart {
 
     public void setMetrics(List<MonitoringMetric> metrics) {
         this.metrics = metrics;
-        System.out.println("metrics size: " + this.metrics.size());
+    }
+
+    public void initialize() {
+        if (initialized) {
+            return;
+        }
+        for (MonitoringMetric metric : this.metrics) {
+            TimeSeries timeSerie = new TimeSeries(metric.getDescription());
+            timeSerie.setMaximumItemCount(100);
+            timeSeries.put(metric, timeSerie);
+            dataset.addSeries(timeSerie);
+        }
+        chart = createTimeSeriesChart();
+        initialized = true;
     }
 
 }

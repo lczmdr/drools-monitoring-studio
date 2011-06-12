@@ -37,7 +37,7 @@ public class MonitoringMetricSorter extends ViewerSorter {
         MonitoringMetric metric1 = (MonitoringMetric) obj1;
         MonitoringMetric metric2 = (MonitoringMetric) obj2;
         Comparator<String> comparator = getComparator();
-        return comparator.compare(metric1.getName(), metric2.getName());
+        return comparator.compare(metric1.getDescription(), metric2.getDescription());
     }
 
 }

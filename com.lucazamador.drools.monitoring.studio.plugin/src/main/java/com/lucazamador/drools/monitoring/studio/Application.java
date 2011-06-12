@@ -4,6 +4,7 @@ import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
 import com.lucazamador.drools.monitoring.core.DroolsMonitoring;
@@ -11,6 +12,7 @@ import com.lucazamador.drools.monitoring.core.DroolsMonitoringFactory;
 import com.lucazamador.drools.monitoring.exception.DroolsMonitoringException;
 import com.lucazamador.drools.monitoring.studio.model.DroolsMonitor;
 import com.lucazamador.drools.monitoring.studio.recovery.RecoveryStudioListener;
+import com.lucazamador.drools.monitoring.studio.view.GraphicUpdaterListener;
 
 /**
  * This class controls all aspects of the application's execution
@@ -60,8 +62,9 @@ public class Application implements IApplication {
 
     public static DroolsMonitoring getDroolsMonitoring() {
         if (droolsMonitoring == null) {
-            droolsMonitoring = DroolsMonitoringFactory.newDroolsMonitoring();
-            droolsMonitoring.registerRecoveryAgentListener(new RecoveryStudioListener(PlatformUI.getWorkbench().getActiveWorkbenchWindow()));
+            IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+            droolsMonitoring = DroolsMonitoringFactory.newDroolsMonitoring(new RecoveryStudioListener(window));
+            droolsMonitoring.registerListener(new GraphicUpdaterListener(window));
             try {
                 droolsMonitoring.start();
             } catch (DroolsMonitoringException e) {
