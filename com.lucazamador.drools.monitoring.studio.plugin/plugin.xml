@@ -60,6 +60,14 @@
             name="Graphic View"
             restorable="true">
       </view>
+      <view
+            allowMultiple="true"
+            class="com.lucazamador.drools.monitoring.studio.view.KnowledgeBaseView"
+            icon="src/main/resources/icons/kbase.png"
+            id="com.lucazamador.drools.monitoring.studio.view.knowledgeBaseView"
+            name="Knowledge Base"
+            restorable="true">
+      </view>
    </extension>
    <extension
          id="drools-monitoring-studio"

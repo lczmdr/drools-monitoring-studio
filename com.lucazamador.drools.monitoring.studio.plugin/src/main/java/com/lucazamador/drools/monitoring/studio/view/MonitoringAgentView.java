@@ -34,6 +34,7 @@ import com.lucazamador.drools.monitoring.studio.action.RemoveMonitoringAgentActi
 import com.lucazamador.drools.monitoring.studio.cfg.ConfigurationManager;
 import com.lucazamador.drools.monitoring.studio.console.ActivityConsoleFactory;
 import com.lucazamador.drools.monitoring.studio.model.Graphic;
+import com.lucazamador.drools.monitoring.studio.model.KnowledgeBase;
 import com.lucazamador.drools.monitoring.studio.model.KnowledgeSession;
 import com.lucazamador.drools.monitoring.studio.model.MonitoringAgent;
 import com.lucazamador.drools.monitoring.studio.model.MonitoringAgentFactory;
@@ -74,7 +75,10 @@ public class MonitoringAgentView extends ViewPart {
                 if (event.getSelection() instanceof IStructuredSelection) {
                     IStructuredSelection selection = (IStructuredSelection) event.getSelection();
                     Object element = selection.getFirstElement();
-                    if (element instanceof KnowledgeSession) {
+                    if (element instanceof KnowledgeBase) {
+                        KnowledgeBase kbase = (KnowledgeBase) element;
+                        KnowledgeBaseViewFactory.openView(kbase);
+                    } else if (element instanceof KnowledgeSession) {
                         KnowledgeSession ksession = (KnowledgeSession) element;
                         String activityConsoleId = ActivityConsoleFactory.getViewId(ksession);
                         ActivityConsoleFactory.openActivityConsole(activityConsoleId);
