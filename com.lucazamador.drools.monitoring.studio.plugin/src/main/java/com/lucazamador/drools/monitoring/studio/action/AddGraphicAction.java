@@ -49,7 +49,7 @@ public class AddGraphicAction extends Action {
             MonitoringAgentView navigationView = (MonitoringAgentView) window.getActivePage().findView(
                     MonitoringAgentView.ID);
             navigationView.refresh();
-            GraphicViewFactory.openView(graphicId, selectedMetrics);
+            GraphicViewFactory.openView(ksession.getParent().getId() + " - " + graphicId, selectedMetrics);
         }
     }
 

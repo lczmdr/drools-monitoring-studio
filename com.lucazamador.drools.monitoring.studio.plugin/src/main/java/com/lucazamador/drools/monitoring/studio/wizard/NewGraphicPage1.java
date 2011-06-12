@@ -91,7 +91,7 @@ public class NewGraphicPage1 extends WizardPage {
         availableMetricsListViewer.setLabelProvider(createLabelProvider());
         availableMetricsListViewer.setSorter(new MonitoringMetricSorter());
         availableMetricsListViewer.setInput(availableMetrics);
-        availableMetricsListViewer.getList().setLayoutData(new GridData(160, 200));
+        availableMetricsListViewer.getList().setLayoutData(new GridData(180, 200));
 
         Composite buttons = new Composite(container, SWT.NONE);
         layout = new GridLayout();
@@ -146,7 +146,7 @@ public class NewGraphicPage1 extends WizardPage {
         selectedMetricsListViewer.setLabelProvider(createLabelProvider());
         selectedMetricsListViewer.setInput(selectedMetrics);
         selectedMetricsListViewer.setSorter(new MonitoringMetricSorter());
-        selectedMetricsListViewer.getList().setLayoutData(new GridData(160, 200));
+        selectedMetricsListViewer.getList().setLayoutData(new GridData(180, 200));
 
         label = new Label(container, SWT.NONE);
         label.setText("");
