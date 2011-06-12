@@ -20,7 +20,7 @@ public class RemoveMonitoringConsoleAction extends Action {
         setToolTipText("Remove Console");
         setId(ICommandIds.REMOVE_MONITORING_CONSOLE);
         setActionDefinitionId(ICommandIds.REMOVE_MONITORING_CONSOLE);
-        setImageDescriptor(ImageDescriptor.createFromFile(getClass(), "/icons/remove.png"));
+        setImageDescriptor(ImageDescriptor.createFromFile(getClass(), "/icons/remove.gif"));
     }
 
     public void run() {
